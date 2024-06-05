@@ -32,12 +32,12 @@ function App() {
   useEffect(() => {
 
     console.log("use effect called")
-    setPlayers(soccerPlayers)
     newWord()
 
   }, []);
 
   const newWord = async () => {
+        await setPlayers(soccerPlayers)
         let idx = Math.floor(Math.random() * soccerPlayers.length)
         const newWord = soccerPlayers[idx];
         console.log("newword", newWord);
