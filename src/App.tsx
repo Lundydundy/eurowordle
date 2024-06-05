@@ -22,41 +22,27 @@ function App() {
   const [guess, setGuess] = useState("");
   const [error, setError] = useState("");
   const [strWord, setStrWord] = useState("");
-  const [word, setWord]: any = useState({});
   const [guesses, setGuesses]: any = useState([]);
   const [gameWon, setGameWon]: any = useState(false);
   const [guessCount, setGuessCount]: any = useState(6);
-  const [players, setPlayers]: any = useState(new Set(soccerPlayers))
+  const [players, setPlayers]: any = useState(new Set())
 
 
   
   useEffect(() => {
 
     console.log("use effect called")
+    setPlayers(soccerPlayers)
     newWord()
 
   }, []);
 
   const newWord = async () => {
-
         let idx = Math.floor(Math.random() * players.size)
         const newWord = soccerPlayers[idx];
         console.log("newword", newWord);
         setStrWord(newWord);
-        const wordCount = {} as any;
-        for (let i = 0; i < newWord.length; i++) {
-          if (wordCount[newWord[i]]) {
-            wordCount[newWord[i]].count += 1;
-            wordCount[newWord[i]].index.push(i);
-          } else {
-            wordCount[newWord[i]] = {
-              count: 1,
-              index: [i]
-            };
-          }
-        }
-        setWord(wordCount);
-      
+       
   }
 
   const handleReset = () => {
