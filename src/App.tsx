@@ -38,7 +38,7 @@ function App() {
   }, []);
 
   const newWord = async () => {
-        let idx = Math.floor(Math.random() * players.size)
+        let idx = Math.floor(Math.random() * soccerPlayers.length)
         const newWord = soccerPlayers[idx];
         console.log("newword", newWord);
         setStrWord(newWord);
