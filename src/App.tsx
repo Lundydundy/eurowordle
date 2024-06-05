@@ -25,7 +25,7 @@ function App() {
   const [guesses, setGuesses]: any = useState([]);
   const [gameWon, setGameWon]: any = useState(false);
   const [guessCount, setGuessCount]: any = useState(6);
-  const [players, setPlayers]: any = useState(new Set())
+  const [players, setPlayers]: any = useState(new Set(soccerPlayers))
 
 
   
