@@ -38,7 +38,8 @@ const soccerPlayers = [
   "vardy",
   "vokes",
   "pelle",
-  "allen"
+  "allen",
+  "kante"
 ];
 
 function App() {
