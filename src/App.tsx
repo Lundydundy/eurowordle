@@ -173,7 +173,6 @@ function App() {
   };
 
 
-
   return (
     <>
       <p>{gameWon ? "Congratulations" : "Guess the Euro Player"}</p>
