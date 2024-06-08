@@ -15,7 +15,6 @@ const soccerPlayers = [
   "puyol",
   "pique",
   "ramos",
-  "messi",
   "viera",
   "silva",
   "petit",
