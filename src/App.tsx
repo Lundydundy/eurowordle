@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
 import 'animate.css';
@@ -42,16 +43,14 @@ const soccerPlayers = [
 ];
 
 function App() {
-  const [guess, setGuess] = useState("");
-  const [error, setError] = useState("");
-  const [strWord, setStrWord] = useState("");
-  const [guesses, setGuesses]: any = useState([]);
-  const [gameWon, setGameWon]: any = useState(false);
-  const [guessCount, setGuessCount]: any = useState(6);
-  const [players, setPlayers]: any = useState(new Set(soccerPlayers))
+  const [guess, setGuess] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [strWord, setStrWord] = useState<string>("");
+  const [guesses, setGuesses] = useState<string[]>([]);
+  const [gameWon, setGameWon] = useState<boolean>(false);
+  const [guessCount, setGuessCount] = useState<number>(6);
+  const [players, setPlayers] = useState<Set<string>>(new Set(soccerPlayers))
 
-
-  
   useEffect(() => {
 
     console.log("use effect called")
@@ -60,12 +59,11 @@ function App() {
   }, []);
 
   const newWord = async () => {
-        if(players.size < 1) setPlayers(soccerPlayers)
+        if(players.size < 1) setPlayers(new Set(soccerPlayers))
         let idx = Math.floor(Math.random() * soccerPlayers.length)
         const newWord = soccerPlayers[idx];
         console.log("newword", newWord);
-        setStrWord(newWord);
-       
+        setStrWord(newWord);   
   }
 
   const handleReset = () => {
@@ -76,18 +74,18 @@ function App() {
     newWord();
   };
 
-  async function fetchWordDefinition(guess: any) {
+  async function fetchWordDefinition(guess: string) {
 
     return players.has(guess.toLowerCase())
   }
 
-  const handleGuess = (e: any) => {
+  const handleGuess = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value.length > 5 || !alphaOnly(value) && value !== "") return;
     setGuess(value);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const validWord = await fetchWordDefinition(guess);
@@ -169,17 +167,17 @@ function App() {
     return ans.split("");
   };
 
-  const alphaOnly = (event: any) => {
+  const alphaOnly = (string: string) => {
     var pattern = new RegExp(/^[a-zA-Z]+$/);
-    return pattern.test(event);
+    return pattern.test(string);
   };
 
 
 
   return (
     <>
-      <p>{gameWon ? "Congratulations" : "Guess the Word"}</p>
-      <p>{guessCount > 0 ? `Guess Left: ${guessCount}` : `Game Over!`}</p>
+      <p>{gameWon ? "Congratulations" : "Guess the Euro Player"}</p>
+      <p>{guessCount > 0 ? `Guess Left: ${guessCount}` : `Game Over! The player was ${strWord}`}</p>
       <input
         style={{ margin: "0 0 3px 0", minWidth: "300px", minHeight: "40px", fontSize: "30px", textAlign: "center" }}
         onChange={handleGuess}
@@ -216,7 +214,7 @@ function App() {
                   className={`animate__animated animate__flipInX animate-delay-${i}`}
                 >
                   <p style={{ color: letter === "r" ? "white" : "black", fontSize: "30px", padding: 0, margin: 0 }}>
-                    {l}
+                    {l.toLowerCase()}
                   </p>
                 </div>
               );
