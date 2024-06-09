@@ -103,7 +103,6 @@ function App() {
     const validWord = await fetchWordDefinition(guess);
 
     if (!validWord) {
-      setGuess("");
       setError("Not a player")
       return
     };
