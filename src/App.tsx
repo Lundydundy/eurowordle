@@ -110,7 +110,6 @@ function App() {
 
     if (guess.length < 5) {
       setError("Make sure you have a 5 letter guess");
-      setGuess("");
       return;
     }
     setError("");
