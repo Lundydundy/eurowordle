@@ -3,44 +3,47 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import 'animate.css';
 
-const soccerPlayers = [
-  "nesta",
-  "klose",
-  "henry",
-  "pires", 
-  "pirlo",
-  "vieri",
-  "keane",
-  "totti",
-  "terry",
-  "puyol",
-  "pique",
-  "ramos",
-  "viera",
-  "silva",
-  "petit",
-  "kafes",
-  "lakis",
-  "senna",
-  "navas",
-  "costa",
-  "pedro",
-  "fonte",
-  "alves",
-  "villa",
-  "blanc",
-  "mario",
-  "rossi",
-  "turan",
-  "guiza",
-  "gomes",
-  "payet",
-  "vardy",
-  "vokes",
-  "pelle",
-  "allen",
-  "kante"
-];
+// 
+
+
+const soccerPlayers: {[key: string]: string} = {
+  nesta: "Italy",
+  klose: "Germany",
+  henry: "France",
+  pires: "France", 
+  pirlo: "Italy",
+  vieri: "Italy",
+  keane: "Ireland",
+  totti: "Italy",
+  terry: "England",
+  puyol: "Spain",
+  pique: "Spain",
+  ramos: "Spain",
+  viera: "France",
+  silva: "Brazil",
+  petit: "France",
+  kafes: "Greece",
+  lakis: "Greece",
+  senna: "Spain",
+  navas: "Spain",
+  costa: "Brazil",
+  pedro: "Spain",
+  fonte: "Portugal",
+  alves: "Portugal",
+  villa: "Spain",
+  blanc: "France",
+  mario: "Portugal",
+  rossi: "Italy",
+  turan: "Turkey",
+  guiza: "Spain",
+  gomes: "Portugal",
+  payet: "France",
+  vardy: "England",
+  vokes: "Wales",
+  pelle: "Italy",
+  allen: "Wales",
+  kante: "France"
+};
 
 function App() {
   const [guess, setGuess] = useState<string>("");
@@ -49,7 +52,15 @@ function App() {
   const [guesses, setGuesses] = useState<string[]>([]);
   const [gameWon, setGameWon] = useState<boolean>(false);
   const [guessCount, setGuessCount] = useState<number>(6);
-  const [players, setPlayers] = useState<Set<string>>(new Set(soccerPlayers))
+  const [players, setPlayers] = useState<Set<string>>(new Set(Object.keys(soccerPlayers)))
+  const [hint, setHint] = useState<string>("");
+
+  interface CountInfo {
+    count: number;
+    index: number[];
+    matches: number;
+  }
+
 
   useEffect(() => {
 
@@ -59,10 +70,11 @@ function App() {
   }, []);
 
   const newWord = async () => {
-        if(players.size < 1) setPlayers(new Set(soccerPlayers))
-        let idx = Math.floor(Math.random() * soccerPlayers.length)
-        const newWord = soccerPlayers[idx];
-        console.log("newword", newWord);
+        if(players.size < 1) setPlayers(new Set(Object.keys(soccerPlayers)))
+        
+        let idx = Math.floor(Math.random() * players.size)
+        const newWord: string = Object.keys(soccerPlayers)[idx];
+        setHint(soccerPlayers[newWord])
         setStrWord(newWord);   
   }
 
@@ -113,7 +125,7 @@ function App() {
   const checkGuess = (g: string) => {
     console.log(strWord);
 
-    const checkCount = {} as any
+    const checkCount = {} as {[key : string]: CountInfo}
 
     for (let i = 0; i < 5; i++) {
       if (checkCount[strWord[i]]) {
@@ -176,9 +188,10 @@ function App() {
   return (
     <>
       <p>{gameWon ? "Congratulations" : "Guess the Euro Player"}</p>
+      <p className='animate__animated animate__fadeIn'>{guessCount < 3 ? `Hint: ${hint}` : ""}</p>
       <p>{guessCount > 0 ? `Guess Left: ${guessCount}` : `Game Over! The player was ${strWord}`}</p>
       <input
-        style={{ margin: "0 0 3px 0", minWidth: "300px", minHeight: "40px", fontSize: "30px", textAlign: "center" }}
+        style={{ margin: "0 0 8px 0", minWidth: "300px", minHeight: "40px", fontSize: "30px", textAlign: "center" }}
         onChange={handleGuess}
         type="text"
         placeholder="Type guess here"
@@ -191,9 +204,9 @@ function App() {
 
       <div>
         {guesses.map((guessObj: any, i: number) => (
-          <div key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
             {guessObj.result.map((letter: string, index: number) => {
-
+              console.log(guessObj)
               const l = guessObj.guess[index];
 
               return (
@@ -221,7 +234,7 @@ function App() {
           </div>
         ))}
       </div>
-      <button style={{ display: gameWon || guessCount === 0 ? "block" : "none", margin: "auto" }} onClick={handleReset} type="button">Reset</button>
+      <button style={{ display: gameWon || guessCount === 0 ? "block" : "none", margin: "auto", marginTop: "8px"}} className="animate__animated animate__fadeIn" onClick={handleReset} type="button">Reset</button>
     </>
   );
 }
