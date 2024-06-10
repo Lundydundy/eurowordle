@@ -238,7 +238,7 @@ function App() {
                     margin: "2px",
                   }
                   }
-                  className={`animate__animated animate__flipInX animate__delay-${index}s`}
+                  className={`animate__animated animate__flipInX`}
                 >
                   <p style={{ color: letter === "r" ? "white" : "black", fontSize: "30px", padding: 0, margin: 0 }}>
                     {l.toLowerCase()}
