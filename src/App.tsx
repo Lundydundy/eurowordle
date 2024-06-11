@@ -252,13 +252,16 @@ function App() {
 
       <button style={{ display: gameWon || guessCount === 0 ? "block" : "none", margin: "auto"}} className="animate__animated animate__fadeInUp" onClick={handleReset} type="button">Reset</button>
 
-      <div onClick={handleRuleDisplay} className={ruleDisplayClass} style={{cursor: "pointer", background: "black", position: "absolute", display: ruleDisplay ? "flex" : "none", alignContent: "center", justifyContent: "center", verticalAlign: "middle", flexDirection: "column", border: "1px solid white", top: "20%", left:"0", right: "0", marginLeft: "auto", marginRight: "auto", padding: "2%", maxWidth: "500px", width:"90%", minWidth: "420px" }}>
+      <div onClick={handleRuleDisplay} className={ruleDisplayClass} style={{cursor: "pointer", background: "black", position: "absolute", display: ruleDisplay ? "flex" : "none", alignContent: "center", justifyContent: "center", verticalAlign: "middle", flexDirection: "column", border: "1px solid white", top: "20%", left:"0", right: "0", marginLeft: "auto", marginRight: "auto", padding: "2%", maxWidth: "430px", width:"90%", minWidth: "420px" }}>
         <h3 style={{ padding: 0, margin: 0 }}>Rules</h3>
-        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "20%" }}>
-          <div style={{ height: "20px", width: "20px", background: "yellow", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> means the letter is somewhere in the word</span>
+        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
+          <div style={{ height: "20px", width: "20px", background: "#242424", display: "inline-block", color: "white" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is not in the word</span>
         </div>
-        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "20%" }}>
-          <div style={{ height: "20px", width: "20px", background: "green", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> means the letter is in the correct position</span>
+        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
+          <div style={{ height: "20px", width: "20px", background: "yellow", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is somewhere in the word</span>
+        </div>
+        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
+          <div style={{ height: "20px", width: "20px", background: "green", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is in the correct position</span>
         </div>
 
       </div>
