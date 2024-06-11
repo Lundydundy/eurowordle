@@ -168,7 +168,6 @@ function App() {
       }
     }
 
-    console.log(ans);
     return ans;
   };
 
@@ -191,7 +190,6 @@ function App() {
 
     }
   }
-
 
   return (
     <>
