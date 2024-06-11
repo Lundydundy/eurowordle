@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
 import 'animate.css';
+import Rules from './components/Rules/Rules';
 
 const soccerPlayers: { [key: string]: string } = {
   nesta: "Italy",
@@ -58,6 +59,7 @@ function App() {
     count: number;
     index: number[];
     matches: number;
+    partial: number[];
   }
 
 
@@ -132,48 +134,42 @@ function App() {
         checkCount[strWord[i]] = {
           count: 1,
           index: [i],
-          matches: 0
+          matches: 0,
+          partial: []
         };
       }
     }
 
-    for (let i = 0; i < 5; i++) {
-      if (checkCount[g[i]]) {
-        checkCount[g[i]].index.forEach((idx: number) => {
-          if (i === idx) {
-            checkCount[g[i]].matches += 1;
-            checkCount[g[i]].count -= 1;
-          }
-        })
-      }
-    }
-
-    let ans = "";
+    let ans = new Array(5).fill("r");
 
     for (let i = 0; i < 5; i++) {
       if (checkCount[g[i]]) {
         let bool: boolean = false;
         checkCount[g[i]].index.forEach((idx: number) => {
           if (i === idx) {
-            ans += "g";
+            checkCount[g[i]].matches += 1;
+            checkCount[g[i]].count -= 1;
+            ans[i] = "g";
             bool = true;
+
+            if (checkCount[g[i]].partial.length > 0) {
+              const partial = checkCount[g[i]].partial.pop() as number;
+              ans[partial] = "r"
+            }
           }
         })
 
         if (bool) continue;
 
         if (checkCount[g[i]].count > 0) {
-          ans += "y";
+          ans[i] = "y";
           checkCount[g[i]].count -= 1;
-        } else {
-          ans += "r";
         }
-      } else {
-        ans += "r";
       }
     }
+
     console.log(ans);
-    return ans.split("");
+    return ans;
   };
 
   const alphaOnly = (string: string) => {
@@ -184,12 +180,12 @@ function App() {
   const handleRuleDisplay = () => {
     if (ruleDisplay) {
       setRuleDisplayClass("animate__animated animate__fadeOutDown")
-      
+
       setTimeout(() => {
         setRuleDisplay(!ruleDisplay)
       }, 1000)
 
-    } else{
+    } else {
       setRuleDisplayClass("animate__animated animate__fadeInUp")
       setRuleDisplay(!ruleDisplay)
 
@@ -221,7 +217,7 @@ function App() {
         {guesses.map((guessObj: any, i: number) => (
           <div key={i} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             {guessObj.result.map((letter: string, index: number) => {
-              
+
               console.log(guessObj)
               const l = guessObj.guess[index];
               return (
@@ -250,21 +246,9 @@ function App() {
         ))}
       </div>
 
-      <button style={{ display: gameWon || guessCount === 0 ? "block" : "none", margin: "auto"}} className="animate__animated animate__fadeInUp" onClick={handleReset} type="button">Reset</button>
+      <button style={{ display: gameWon || guessCount === 0 ? "block" : "none", margin: "auto", marginTop: "2%" }} className="animate__animated animate__fadeIn" onClick={handleReset} type="button">Reset</button>
 
-      <div onClick={handleRuleDisplay} className={ruleDisplayClass} style={{cursor: "pointer", background: "black", position: "absolute", display: ruleDisplay ? "flex" : "none", alignContent: "center", justifyContent: "center", verticalAlign: "middle", flexDirection: "column", border: "1px solid white", top: "20%", left:"0", right: "0", marginLeft: "auto", marginRight: "auto", padding: "2%", maxWidth: "430px", width:"90%", minWidth: "420px" }}>
-        <h3 style={{ padding: 0, margin: 0 }}>Rules</h3>
-        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
-          <div style={{ height: "20px", width: "20px", background: "#242424", display: "inline-block", color: "white" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is not in the word</span>
-        </div>
-        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
-          <div style={{ height: "20px", width: "20px", background: "yellow", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is somewhere in the word</span>
-        </div>
-        <div style={{ justifyContent: "left", alignItems: "center", display: "flex", maxWidth: "500px", marginLeft: "17%" }}>
-          <div style={{ height: "20px", width: "20px", background: "green", display: "inline-block", color: "black" }}>e</div><span style={{ verticalAlign: "middle", marginLeft: "2px" }}> The letter is in the correct position</span>
-        </div>
-
-      </div>
+      <Rules handleRuleDisplay={handleRuleDisplay} ruleDisplayClass={ruleDisplayClass} handleReset={handleReset} ruleDisplay={ruleDisplay} />
 
     </>
   );
