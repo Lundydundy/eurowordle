@@ -76,7 +76,7 @@ function App() {
     let idx = Math.floor(Math.random() * players.size)
     const newWord: string = Object.keys(soccerPlayers)[idx];
     setHint(soccerPlayers[newWord])
-    setStrWord("henry");
+    setStrWord(newWord);
   }
 
   const handleReset = () => {
