@@ -76,7 +76,7 @@ function App() {
     let idx = Math.floor(Math.random() * players.size)
     const newWord: string = Object.keys(soccerPlayers)[idx];
     setHint(soccerPlayers[newWord])
-    setStrWord(newWord);
+    setStrWord("henry");
   }
 
   const handleReset = () => {
@@ -164,6 +164,8 @@ function App() {
         if (checkCount[g[i]].count > 0) {
           ans[i] = "y";
           checkCount[g[i]].count -= 1;
+          checkCount[g[i]].partial.push(i);
+          
         }
       }
     }
